@@ -1,0 +1,71 @@
+<style>
+    div[slot="title"] {
+        text-align: center;
+    }
+
+    z-button {
+        display: block;
+        margin: 8px;
+    }
+</style>
+
+<script>
+    export default {
+        texts: {
+            header: {
+                en: 'Pause',
+                ru: 'Пауза'
+            },
+            'sound': {
+                en: 'Pronunciation of words',
+                ru: 'Произношение слов'
+            },
+            about: {
+                en: 'About application',
+                ru: 'О программе'
+            },
+            settings: {
+                en: 'Main menu',
+                ru: 'Главное меню'
+            }
+        },
+        create: that => ({
+            connectedCallback: () => {
+
+                const content = that.shadowRoot.children[1].children[1];
+
+                const raiseEvent = (name, e) => {
+
+                    e.stopPropagation();
+
+                    that.shadowRoot.dispatchEvent(new CustomEvent(name, {
+                        bubbles: true,
+                        composed: true
+                    }));
+                };
+
+                content.children[0].addEventListener('click', e => raiseEvent('closePage', e));
+                content.children[1].addEventListener('click', e => raiseEvent('gameRules', e));
+                content.children[2].addEventListener('click', e => raiseEvent('soundBtnClick', e));
+            }
+        })
+    };
+</script>
+
+<template>
+    <z-modal-dial>
+        <div slot="title">{{header}}</div>
+        <div slot="content">
+
+            <z-button data-block>
+                <z-icon type="gear">{{settings}}</z-icon>
+            </z-button>
+
+            <z-button data-block id="btnAbout">
+                <z-icon type="dict">{{about}}</z-icon>
+            </z-button>
+
+            <z-checkbox id="tglSound">{{sound}}</z-checkbox>
+        </div>
+    </z-modal-dial>
+</template>

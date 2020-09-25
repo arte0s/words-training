@@ -1,0 +1,33 @@
+html,
+body {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    /* 80% of screen height */
+    max-width: 80vh;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 0;
+    background-color: #aaaaaa;
+    color: var(--title);
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    user-select: none;
+}
+
+.preloader {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+button {
+    color: var(--title);
+}
+
+* {
+    /* Disable the blinking effect of buttons and input fields */
+    -webkit-tap-highlight-color: transparent;
+}

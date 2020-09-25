@@ -1,0 +1,58 @@
+<style>
+    z-modal>div {
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+
+    slot[name="content"]::slotted(*) {
+        padding: 15px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    :host([data-hide-close]) z-icon{
+        display: none;
+    }
+
+    z-modal>div {
+        background-color: var(--header);
+    }
+
+    slot[name="content"]::slotted(*) {
+        background-color: var(--body);
+        color: var(--text);
+    }
+</style>
+
+<script>
+    export default {
+        create: that => ({
+            connectedCallback: () => {
+
+                that.shadowRoot.children[1].children[0].children[0].addEventListener('navbarClick', e => {
+
+                    that.shadowRoot.dispatchEvent(new CustomEvent('modalClose', {
+                        bubbles: true,
+                        composed: true
+                    }));
+                });
+            }
+        })
+    };
+</script>
+
+<template>
+    <z-modal>
+        <div>
+            <z-navbar data-close>
+                <span slot="title">
+                    <slot name="title"></slot>
+                </span>
+
+                <z-icon type="close" slot="icon"></z-icon>
+            </z-navbar>
+        </div>
+
+        <slot name="content"></slot>
+    </z-modal>
+</template>

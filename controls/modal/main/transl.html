@@ -1,0 +1,32 @@
+<style>
+    z-modal-dial>div>slot {
+        display: block;
+        margin: 0 0 5px 0;
+    }
+
+    z-modal-dial>div>slot:first-child {
+        text-align: center;
+        font-weight: bold;
+        font-size: 120%;
+        color: var(--important);
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<script>
+    export default {
+        create: that => ({
+            connectedCallback: () => {}
+        })
+    };
+</script>
+
+<template>
+    <z-modal-dial>
+        <div slot="title">Перевод</div>
+        <div slot="content">
+            <slot name="word">{слово}</slot>
+            <slot name="transl">{перевод}</slot>
+        </div>
+    </z-modal-dial>
+</template>

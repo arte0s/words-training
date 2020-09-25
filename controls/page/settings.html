@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+
+    <style>
+        z-page {
+            background-color: var(--body);
+        }
+
+        z-page>div[slot="content"] {
+            margin: 10% 15px;
+        }
+    </style>
+
+    <script>
+        export default {
+            texts: {
+                verbs: {
+                    en: '90 phrasal verbs',
+                    ru: '90 фразовых глаголов'
+                },
+                pop: {
+                    en: '7000 most common words',
+                    ru: '7000 наиболее употреб-х слов'
+                },
+                lang: {
+                    en: 'Interface language',
+                    ru: 'Язык интерфейса'
+                },
+                reset: {
+                    en: 'Reset count',
+                    ru: 'Обнулить счёт',
+                },
+                colors: {
+                    en: 'Day/Night mode',
+                    ru: 'Дневной/Ночной режим'
+                },
+                auto: {
+                    en: 'Automatic night mode',
+                    ru: 'Автоматический ночной режим'
+                }
+            },
+            create: that => ({
+                connectedCallback: () => {
+
+                    const raiseEvent = (name, e) => {
+
+                        e.stopPropagation();
+
+                        that.shadowRoot.dispatchEvent(new CustomEvent(name, {
+                            bubbles: true,
+                            composed: true
+                        }));
+                    };
+
+                    const root = that.shadowRoot;
+
+                    root.getElementById('navBar').addEventListener('navbarClick',
+                        e => raiseEvent('closePage', e));
+
+                    root.getElementById('langBtn').addEventListener('click', e => {
+
+                        e.stopPropagation();
+
+                        const head = document.documentElement;
+                        head.setAttribute('lang', head.getAttribute('lang') === 'en' ? 'ru' : 'en');
+                    });
+                }
+            })
+        };
+    </script>
+
+    <template>
+        <z-page>
+            <z-navbar id="navBar" slot="header">
+                <z-icon-back slot="icon" inverse></z-icon-back>
+            </z-navbar>
+
+            <div slot="content">
+                <z-checkbox id="cbAuto">{{auto}}</z-checkbox>
+
+                <z-button data-block id="btnColors">
+                    <z-icon type="sun">{{colors}}</z-icon>
+                </z-button>
+
+                <z-button data-block id="langBtn">
+                    <z-icon type="lang">{{lang}}</z-icon>
+                </z-button>
+
+                <z-button data-block id="resetBtn">
+                    <z-icon type="erase">{{reset}}</z-icon>
+                </z-button>
+
+                <z-button data-block id="verbBtn">
+                    <z-icon type="dict">{{verbs}}</z-icon>
+                </z-button>
+
+                <z-button data-block id="popBtn">
+                    <z-icon type="dict">{{pop}}</z-icon>
+                </z-button>
+
+                <z-checkbox id="verbsChk">{{verbs}}</z-checkbox>
+                <z-checkbox id="popChk" disabled>{{pop}}</z-checkbox>
+                <!-- <z-checkbox id="popChk" checked disabled>{{pop}}</z-checkbox>
+                <z-checkbox id="popChk2" disabled>{{pop}}</z-checkbox>
+                <z-checkbox id="popChk3">{{pop}}</z-checkbox> -->
+            </div>
+        </z-page>
+    </template>
+</head>
+
+</html>

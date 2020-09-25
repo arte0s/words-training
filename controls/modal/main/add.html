@@ -1,0 +1,55 @@
+<style>
+    z-modal-dial>div>slot {
+        display: block;
+        margin: 0 0 5px 0;
+    }
+
+    z-modal-dial>div>slot:first-child {
+        text-align: center;
+        font-weight: bold;
+        font-size: 120%;
+        color: var(--important);
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<script>
+    export default {
+        texts: {
+            header: {
+                en: 'Learn new word',
+                ru: 'Учить новое слово?'
+            },
+            learn: {
+                en: 'Learn',
+                ru: 'Учить'
+            },
+            know: {
+                en: 'Know',
+                ru: 'Знаю'
+            }
+        },
+        create: that => ({
+            connectedCallback: () => {}
+        })
+    };
+</script>
+
+<template>
+    <z-modal-dial data-hide-close>
+        <div slot="title">{{header}}</div>
+
+        <div slot="content">
+            <slot name="word">{слово}</slot>
+            <slot name="transl">{перевод}</slot>
+
+            <z-button data-modal id="learn">
+                <z-icon type="ok">{{learn}}</z-icon>
+            </z-button>
+
+            <z-button data-modal id="skip">
+                <z-icon type="skip">{{know}}</z-icon>
+            </z-button>
+        </div>
+    </z-modal-dial>
+</template>

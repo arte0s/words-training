@@ -1,0 +1,176 @@
+<style>
+    .toggle {
+        --toggle-size: 24px;
+        --toggle-inset: calc(var(--toggle-size) / 10);
+        --slider-size: calc(var(--toggle-size) - 2 * var(--toggle-inset));
+        --border-radius: calc(var(--toggle-size) / 2);
+
+        position: relative;
+        display: flex;
+        align-items: center;
+        text-align: left;
+    }
+
+    .toggle-button {
+        position: relative;
+        display: inline-block;
+        width: calc(var(--toggle-size) * 2);
+        height: var(--toggle-size);
+        margin: 8px;
+    }
+
+    input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--shadow-middle);
+        box-shadow: inset 0 0 5px 0 var(--shadow-dark);
+        border-radius: var(--border-radius);
+    }
+
+    .slider,
+    .slider:before {
+        position: absolute;
+        transition: .2s ease;
+    }
+
+    .slider:before {
+        content: "";
+        height: var(--slider-size);
+        width: var(--slider-size);
+        left: var(--toggle-inset);
+        bottom: var(--toggle-inset);
+        background-color: var(--title);
+        border-radius: var(--border-radius);
+    }
+
+    :host([data-finished]) .slider {
+        background-color: var(--important);
+    }
+
+    input:checked+.slider {
+        background-color: var(--button);
+    }
+
+    input:checked+.slider:before {
+        left: calc(var(--toggle-size) + var(--toggle-inset));
+    }
+
+    input:focus+.slider {
+        box-shadow: inset 0 0 5px 1px var(--shadow-dark);
+    }
+
+    :host([disabled]) .slider::before {
+        background-image: linear-gradient(var(--shadow-dark), var(--shadow-dark));
+    }
+
+    .name {
+        display: inline-block;
+        margin-left: 0.5rem;
+    }
+
+    slot {
+        color: var(--text);
+        /* color: var(--button); */
+    }
+</style>
+
+<script>
+    const CHK = 'checked';
+    const DIS = 'disabled';
+
+    export default {
+        observedAttributes: () => [CHK, DIS],
+        create: that => {
+
+            const getInput = () => that.shadowRoot.children[1].children[0].children[0];
+
+            const setDisabled = rootChanged => {
+
+                const inp = getInput();
+                const dis = that.hasAttribute(DIS);
+
+                // console.log('[CHECKBOX] disabled', inp.disabled, rootChanged);
+
+                if (dis !== inp.disabled)
+                    if (rootChanged)
+                        inp.disabled = dis;
+                    else
+                        dis ? that.removeAttribute(DIS) : that.setAttribute(DIS, '');
+
+            };
+
+            const setCheckbox = rootChanged => {
+
+                const inp = getInput();
+                const chk = that.hasAttribute(CHK);
+
+                // console.log('[CHECKBOX]', inp.checked, rootChanged);
+
+                if (chk !== inp.checked)
+                    if (rootChanged)
+                        inp.checked = chk;
+                    else
+                        chk ? that.removeAttribute(CHK) : that.setAttribute(CHK, '');
+            };
+
+            return {
+                connectedCallback: () => {
+
+                    const inp = getInput();
+                    
+                    inp.addEventListener('click', e => {
+
+                        e.stopPropagation();
+
+                        // console.log('[CHECKBOX] event', inp.checked);
+                        setCheckbox();
+                        setDisabled();
+
+                        that.shadowRoot.dispatchEvent(new CustomEvent('cbClick', {
+                            bubbles: true,
+                            composed: true,
+                            detail: inp.checked
+                        }));
+                    });
+
+                    setCheckbox(true);
+                    setDisabled(true);
+                },
+                attributeChangedCallback: (name, oldValue, newValue) => {
+
+                    if (that.shadowRoot) {
+
+                        if (name === CHK)
+                            setCheckbox(true);
+
+                        if (name === DIS)
+                            setDisabled(true);
+                    }
+                }
+            }
+        }
+    };
+</script>
+
+<template>
+    <label class="toggle">
+
+        <div class="toggle-button">
+            <input type="checkbox">
+            <span class="slider"></span>
+        </div>
+
+        <span class="name">
+            <slot>{text}</slot>
+        </span>
+    </label>
+</template>

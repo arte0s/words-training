@@ -1,0 +1,28 @@
+:root {
+    --image-path: url(img/london-logo.png);
+    --shadow: 128, 128, 128;
+    --shadow-light: rgba(var(--shadow), 0.1);
+    --shadow-middle: rgba(var(--shadow), 0.5);
+    --shadow-dark: rgba(var(--shadow), 0.9);
+    --filter-main: contrast(130%) grayscale(100%);
+    --title: #ffffff;
+    --button: #05577d;
+    --header: #023751;
+    --important: #a52a2a;
+    --correct0: #5ac44a;
+    --correct1: #389389;
+    --correct2: #ED9859;
+    --correct3: #EDB959;
+}
+
+.colors-light {
+    --filter: var(--filter-main);
+    --text: var(--header);
+    --body: #ededed;
+}
+
+.colors-dark {
+    --filter: var(--filter-main) invert(100%);
+    --text: var(--title);
+    --body: #151515;
+}

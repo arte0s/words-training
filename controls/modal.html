@@ -1,0 +1,33 @@
+<style>
+    :host>div {
+        display: flex;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        overflow: auto;
+        background-color: var(--shadow-middle);
+        /* background-color: rgba(0, 0, 0, 0.4); */
+    }
+
+    :host>div>div {
+        position: relative;
+        top: -50px;
+        width: 94%;
+        /* Because for body max-width = 80vh */
+        max-width: 75vh;
+        margin: auto;
+        border-radius: 5px;
+        /* box-shadow: var(--shadow-middle) 0 0 10px; */
+    }
+</style>
+
+<template>
+    <div>
+        <div>
+            <slot></slot>
+        </div>
+    </div>
+</template>

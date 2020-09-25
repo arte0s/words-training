@@ -1,0 +1,220 @@
+<style>
+    .list-container {
+        position: relative;
+        height: 100%;
+        background-color: var(--body);
+    }
+
+    /* .list-background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: var(--image-path);
+        background-position: bottom;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: var(--filter);
+    } */
+
+    .list-content {
+        position: relative;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    /* Width */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: var(--body);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--important);
+    }
+</style>
+
+<script>
+    const MAX = 'data-max';
+    const PART = 'data-part';
+    const SCROLL = 'data-scroll';
+    const INIT = 'data-init';
+
+    export default {
+        observedAttributes: () => [MAX, PART, SCROLL, INIT],
+        create: that => {
+
+            //TODO: Will be tag attribute or calculate?
+            const DELTA_SIZE = 500; //Bottom marging of list + border must be < DELTA_SIZE
+
+            let partSize;
+            let maxLoaded, maxIndex;
+            let loadedFr, loadedTo;
+
+            ///////////////////////////////////////////////////////////////////////////
+            const scrollPos = (() => {
+
+                let curPos, oldPos;
+
+                return {
+                    save: elRoot => {
+
+                        curPos = elRoot.scrollTop;
+                        oldPos = elRoot.scrollHeight - elRoot.clientHeight;
+
+                        // console.log('[SCROLL SAVE]', elRoot.scrollHeight, elRoot.clientHeight);
+                    },
+                    load: (elRoot, val) => {
+
+                        const newScroll = elRoot.scrollHeight - elRoot.clientHeight;
+                        elRoot.scrollTop = curPos + (newScroll - oldPos);
+
+                        // console.log('[SCROLL LOAD]', elRoot.scrollHeight, elRoot.clientHeight, val);
+                    }
+                }
+            })();
+
+            ///////////////////////////////////////////////////////////////////////////
+            const normalize = p => p < 0 ? 0 : p > maxIndex ? maxIndex : p;
+
+            const getCreateIndexes = (fr, to) => {
+
+                fr = normalize(fr);
+                to = normalize(to);
+
+                if (to > loadedTo)
+                    loadedTo = to;
+                else
+                    loadedFr = fr;
+
+                // console.log('[CREATE]', fr, to);
+
+                return [fr, to];
+            };
+
+            const deletePart = (fr, to, up) => {
+
+                if (loadedTo - loadedFr + 1 <= maxLoaded) return;
+
+                fr = normalize(fr);
+                to = normalize(to);
+
+                if (fr === loadedFr)
+                    loadedFr = to + 1;
+                else
+                    loadedTo = fr - 1;
+
+                // console.log('[DEL]', fr, to);
+
+                for (let i = 0; i < partSize; i++)
+                    up ? that.children[that.children.length - 1].remove() :
+                    that.children[0].remove();
+
+            };
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            const scrollDown = loadNumber => {
+
+                deletePart(loadedFr, loadedFr + loadNumber - 1);
+                return getCreateIndexes(loadedTo + 1, loadedTo + loadNumber);
+            };
+
+            const scrollUp = elRoot => {
+
+                deletePart(loadedTo - partSize + 1, loadedTo, true);
+                scrollPos.save(elRoot);
+                return getCreateIndexes(loadedFr - partSize, loadedFr - 1);
+            };
+
+            ////////////////////////////////////////////////////////////////////////////////////////
+            const genEvent = ([crFr, crTo] = [], up) => that.shadowRoot.dispatchEvent(
+                new CustomEvent('listScroll', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        crFr,
+                        crTo,
+                        up
+                    }
+                }));
+
+            const setMax = max => maxIndex = max;
+
+            const setPart = part => {
+
+                partSize = part;
+                maxLoaded = partSize * 4;
+            };
+
+            const init = part => {
+
+                loadedFr = 0;
+                loadedTo = -1;
+
+                genEvent(scrollDown(maxLoaded));
+            };
+
+            const getRoot = () => that.shadowRoot.children[1].children[0];
+            // const getRoot = () => that.shadowRoot.children[1].children[1];
+
+            ///////////////////////////////////////////////////////////////////////////
+            return {
+                connectedCallback: () => {
+
+                    const elRoot = getRoot();
+
+                    elRoot.addEventListener('scroll', e => {
+
+                        e.stopPropagation();
+
+                        if (elRoot.scrollTop + elRoot.clientHeight > elRoot.scrollHeight - DELTA_SIZE) {
+
+                            if (loadedTo < maxIndex)
+                                genEvent(scrollDown(partSize));
+
+                        } else if (elRoot.scrollTop <= DELTA_SIZE && loadedFr !== 0)
+
+                            genEvent(scrollUp(elRoot), true);
+                    });
+                },
+                attributeChangedCallback: (name, oldValue, newValue) => {
+
+                    if (that.shadowRoot) {
+
+                        if (name === MAX)
+
+                            setMax(parseInt(newValue));
+
+                        else if (name === PART)
+
+                            setPart(parseInt(newValue));
+
+                        else if (name === INIT && newValue !== null) {
+
+                            init();
+                            that.removeAttribute(INIT);
+                            
+                        } else if (name === SCROLL && newValue !== null) {
+
+                            scrollPos.load(getRoot(), newValue);
+                            that.removeAttribute(SCROLL);
+                        }
+                    }
+                }
+            };
+        }
+    };
+</script>
+
+<template>
+    <div class="list-container">
+        <!-- <div class="list-background"></div> -->
+        <div class="list-content">
+            <slot></slot>
+        </div>
+    </div>
+</template>
