@@ -8,5 +8,5 @@ gulp.task('js', function(){
         .pipe(concat('index.js'))
         .pipe(minify())
         // .pipe(uglify())
-        .pipe(gulp.dest('.'));
+        .pipe(gulp.dest('min'));
 });
