@@ -13,32 +13,29 @@
     <link rel="stylesheet" type="text/css" href="css/colors.css">
     <link rel="stylesheet" type="text/css" href="css/app.css">
 
+    <style>
+        z-icon-gear,
+        z-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+
     <script>
         const global = {};
     </script>
 
-    <script src="./min/index-min.js"></script>
+    <script src="./zoox.js"></script>
 
     <script>
         'use strict';
         Object.freeze(global);
-        zoox.framework.init('./controls/', async () => {
-
-            // const model = await global.initModel();
-
-            // const cDict = global.initDict(model);
-            // global.initSett(model, cDict);
-            // global.initMain(model);
-        });
+        zoox.framework.init('./controls/', async () => {});
     </script>
 </head>
 
 <body class="colors-dark">
-    <!-- <img class="preloader" src="img/preloader.svg" id="loader">
-    <z-app style="display: none;" id="app"></z-app> -->
-
-    <!-- <z-modal-main-menu></z-modal-main-menu> -->
-
     <z-icon-gear></z-icon-gear>
     <z-icon data-type="dict">{{about}}</z-icon>
     <z-icon data-type="gear">{{settings}}</z-icon>
