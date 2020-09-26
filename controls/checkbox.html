@@ -1,6 +1,6 @@
 <style>
     .toggle {
-        --toggle-size: 22px;
+        --toggle-size: 24px;
         --toggle-inset: calc(var(--toggle-size) / 10);
         --slider-size: calc(var(--toggle-size) - 2 * var(--toggle-inset));
         --border-radius: calc(var(--toggle-size) / 2);
@@ -9,7 +9,7 @@
         display: flex;
         align-items: center;
         text-align: left;
-        margin: 10px 10px 0 10px;
+        margin: 10px 10px 0 0;
     }
 
     .toggle-button {
@@ -80,7 +80,6 @@
 
     slot {
         color: var(--text);
-        color: var(--button);
     }
 </style>
 

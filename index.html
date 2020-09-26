@@ -26,7 +26,7 @@
 
             const model = await global.initModel();
 
-            const cDict = global.initDict(model);                        
+            const cDict = global.initDict(model);
             // global.initSett(model, cDict);
             // global.initMain(model);
         });
@@ -37,7 +37,15 @@
     <!-- <img class="preloader" src="img/preloader.svg" id="loader">
     <z-app style="display: none;" id="app"></z-app> -->
 
-    <z-modal-main-menu></z-modal-main-menu>
+    <!-- <z-modal-main-menu></z-modal-main-menu> -->
+
+    <z-button data-block>
+        <z-icon type="gear">{{settings}}</z-icon>
+    </z-button>
+
+    <z-button data-block id="btnAbout">
+        <z-icon type="dict">{{about}}</z-icon>
+    </z-button>
 </body>
 
 </html>
