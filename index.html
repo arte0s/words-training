@@ -26,11 +26,7 @@
 
             const model = await global.initModel();
 
-            const cDict = global.initDict(model);
-            
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('app').style.display = '';
-            
+            const cDict = global.initDict(model);                        
             // global.initSett(model, cDict);
             // global.initMain(model);
         });
