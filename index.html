@@ -27,11 +27,11 @@
             const model = await global.initModel();
 
             const cDict = global.initDict(model);
-            global.initSett(model, cDict);
-
+            
             document.getElementById('loader').style.display = 'none';
             document.getElementById('app').style.display = '';
-
+            
+            // global.initSett(model, cDict);
             // global.initMain(model);
         });
     </script>
