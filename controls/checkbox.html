@@ -1,6 +1,6 @@
 <style>
     .toggle {
-        --toggle-size: 24px;
+        --toggle-size: 18px;
         --toggle-inset: calc(var(--toggle-size) / 10);
         --slider-size: calc(var(--toggle-size) - 2 * var(--toggle-inset));
         --border-radius: calc(var(--toggle-size) / 2);
@@ -16,7 +16,7 @@
         display: inline-block;
         width: calc(var(--toggle-size) * 2);
         height: var(--toggle-size);
-        margin: 8px;
+        margin: 8px 8px 0 8px;
     }
 
     input {
@@ -74,12 +74,12 @@
 
     .name {
         display: inline-block;
-        margin-left: 0.5rem;
+        /* margin-left: 0.5rem; */
     }
 
     slot {
         color: var(--text);
-        /* color: var(--button); */
+        color: var(--button);
     }
 </style>
 

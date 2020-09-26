@@ -11,6 +11,16 @@
         color: var(--important);
         margin: 0 0 10px 0;
     }
+
+    .buttons {
+        margin: 0 auto;
+        /* Two learn & skip buttons: 40% x2 */
+        width: 80%;
+    }
+
+    div[slot="content"] {
+        padding-top: 10px;
+    }
 </style>
 
 <script>
@@ -43,13 +53,15 @@
             <slot name="word">{слово}</slot>
             <slot name="transl">{перевод}</slot>
 
-            <z-button data-modal id="learn">
-                <z-icon type="ok">{{learn}}</z-icon>
-            </z-button>
+            <div class="buttons">
+                <z-button data-modal id="learn">
+                    <z-icon type="ok">{{learn}}</z-icon>
+                </z-button>
 
-            <z-button data-modal id="skip">
-                <z-icon type="skip">{{know}}</z-icon>
-            </z-button>
+                <z-button data-modal id="skip">
+                    <z-icon type="skip">{{know}}</z-icon>
+                </z-button>
+            </div>
         </div>
     </z-modal-dial>
 </template>

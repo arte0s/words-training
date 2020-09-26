@@ -3,15 +3,15 @@ body {
     position: relative;
     height: 100%;
     width: 100%;
-    /* 80% of screen height */
-    max-width: 80vh;
+    /* 70% of screen height */
+    max-width: 70vh;
     overflow: hidden;
     margin: 0 auto;
     padding: 0;
     background-color: #aaaaaa;
     color: var(--title);
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 18px;
+    font-size: 14px;
     user-select: none;
 }
 

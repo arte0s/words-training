@@ -9,6 +9,10 @@
         color: var(--text);
     }
 
+    z-checkbox {
+        margin-bottom: 8px;
+    }
+
     :host>div>div:first-child {
         display: inline-flex;
         background-color: var(--shadow-light);
@@ -28,19 +32,16 @@
 
     .line>div {
         display: inline-block;
-        padding: 5px;
-    }
-
-    slot[name="number"] {
-        font-size: 80%;
+        padding: 1px;
     }
 
     .line>.center {
-        font-size: 120%;
+        font-size: 110%;
         font-weight: bold;
         color: var(--important);
     }
 
+    .line>.left,
     .line>.right {
         font-size: 90%;
     }
@@ -52,7 +53,7 @@
 
     /* Track */
     ::-webkit-scrollbar-track {
-        background: var(--body);
+        background: var(--shadow-middle);
     }
 
     /* Handle */
@@ -169,7 +170,7 @@
                 <div class="right">
 
                     <z-button id="sound" data-round>
-                        <z-icon type="sound-on"></z-icon>
+                        <z-icon type="sound"></z-icon>
                     </z-button>
                 </div>
             </div>
