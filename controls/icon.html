@@ -19,26 +19,29 @@
                 zoox.framework.load(name);
 
                 const tag = document.createElement(name);
+                const slot = that.shadowRoot.children[1].children[0];
+                // console.log(slot);
 
-                if (!iconName) {
+                if (iconName)
+                    slot.children[0].remove();
 
-                    const slot = document.createElement('slot');
-                    that.shadowRoot.appendChild(tag);
-                    that.shadowRoot.appendChild(slot);
-
-                } else {
-
-                    that.shadowRoot.children[1].remove();
-                    that.shadowRoot.insertBefore(tag, that.shadowRoot.children[1]);
-                }
+                slot.appendChild(tag);
             };
 
             return {
                 connectedCallback: () => render(),
-                attributeChangedCallback: (name, oldValue, newValue) => render(newValue)
+                attributeChangedCallback: (name, oldValue, newValue) => {
+
+                    if (name === 'data-type')
+                        render(newValue);
+                }
             };
         }
     };
 </script>
 
-<template></template>
+<template>
+    <div>
+        <slot></slot>
+    </div>
+</template>

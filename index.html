@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<!-- TODO: !!! ИСПРАВИТЬ ОШИБКИ ПРИ ЗАПОЛНЕНИИ ЛИСТА !!! -->
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport"
@@ -22,23 +20,18 @@
         }
     </style>
 
-    <script>
-        const global = {};
-    </script>
-
     <script src="./zoox.js"></script>
 
     <script>
         'use strict';
-        Object.freeze(global);
         zoox.framework.init('./controls/', async () => {});
     </script>
 </head>
 
 <body class="colors-dark">
     <z-icon-back></z-icon-back>
-    <z-icon data-type="back">{{about}}</z-icon>
-    <z-icon data-type="sun">{{settings}}</z-icon>
+    <z-icon data-type="back"></z-icon>
+    <z-icon data-type="close">222</z-icon>
 </body>
 
 </html>
