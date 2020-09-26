@@ -19,8 +19,8 @@
                 zoox.framework.load(name);
 
                 const tag = document.createElement(name);
-                const slot = that.shadowRoot.children[1].children[0];
-                // console.log(slot);
+                const slot = that.shadowRoot.children[1];
+                console.log(slot);
 
                 if (iconName)
                     slot.children[0].remove();
