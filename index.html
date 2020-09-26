@@ -24,18 +24,19 @@
         Object.freeze(global);
         zoox.framework.init('./controls/', async () => {
 
-            const model = await global.initModel();
+            // const model = await global.initModel();
 
-            const cDict = global.initDict(model);
-            global.initSett(model, cDict);
-            global.initMain(model);
+            // const cDict = global.initDict(model);
+            // global.initSett(model, cDict);
+            // global.initMain(model);
         });
     </script>
 </head>
 
-<body>
-    <img class="preloader" src="img/preloader.svg" id="loader">
-    <z-button>Test</z-button>
+<body class="colors-light">
+    <!-- <img class="preloader" src="img/preloader.svg" id="loader"> -->
+    <!-- <z-button>Test</z-button> -->
+    <z-app id="app"></z-app>
     <!-- <z-app style="display: none;" id="app"></z-app> -->
 </body>
 
