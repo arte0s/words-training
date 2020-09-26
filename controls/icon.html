@@ -15,10 +15,11 @@
                 if (!that.shadowRoot)
                     return;
 
-                const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
-                zoox.framework.load(name);
+                // const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
+                // zoox.framework.load(name);
 
-                const tag = document.createElement(name);
+                const tag = document.createElement('div');
+                tag.textContent = 'test';
                 const slot = that.shadowRoot.children[1];
                 console.log(slot);
 
