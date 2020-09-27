@@ -1,27 +1,47 @@
 <style>
+    :host>*:nth-child(2) {
+        /* display: inline-block; */
+        /* padding: 0 4px 0 0; */
+    }
 </style>
 
 <script>
     export default {
-        create: that => ({
-            connectedCallback: () => {
+        // observedAttributes: () => ['data-type'],
+        create: that => {
 
-                if (!that.shadowRoot) return;
+            const render = iconName => {
 
+                if (!that.shadowRoot)
+                    return;
+
+                // const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
+                // zoox.framework.load(name);
+
+                const tag = document.createElement('z-icon-back');
                 const slot = that.shadowRoot.children[1];
                 console.log(slot);
 
-                const tag = document.createElement('div');
-                tag.textContent = 'test';
-                slot.appendChild(tag);
+                // if (iconName)
+                //     slot.children[0].remove();
 
-                const tag2 = document.createElement('z-icon-back');
-                slot.appendChild(tag2);
-            }
-        })
-    }
+                slot.appendChild(tag);
+            };
+
+            return {
+                connectedCallback: () => render(),
+                // attributeChangedCallback: (name, oldValue, newValue) => {
+
+                //     if (name === 'data-type')
+                //         render(newValue);
+                // }
+            };
+        }
+    };
 </script>
 
 <template>
-    <div></div>
+    <div>
+        <slot></slot>
+    </div>
 </template>
