@@ -7,7 +7,7 @@
 
 <script>
     export default {
-        // observedAttributes: () => ['data-type'],
+        observedAttributes: () => ['data-type'],
         create: that => {
 
             const render = iconName => {
@@ -20,8 +20,8 @@
                 const root = that.shadowRoot.children[1];
                 console.log(root);
 
-                // if (iconName && root.children && root.children[0])
-                //     root.children[0].remove();
+                if (iconName && root.children && root.children[0])
+                    root.children[0].remove();
 
                 const tag = document.createElement('z-icon-back');
                 root.appendChild(tag);
@@ -29,11 +29,11 @@
 
             return {
                 connectedCallback: () => render(),
-                // attributeChangedCallback: (name, oldValue, newValue) => {
+                attributeChangedCallback: (name, oldValue, newValue) => {
 
-                //     // if (name === 'data-type')
-                //     //     render(newValue);
-                // }
+                    if (name === 'data-type')
+                        render(newValue);
+                }
             };
         }
     };
