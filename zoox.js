@@ -237,8 +237,15 @@ const zoox = {
             },
             load: tag => {
 
-                if (isElemExist(tag))
-                    return loadElement(tag);
+                if (isElemExist(tag)) {
+
+                    alert('loading!');
+                    const res = loadElement(tag);
+                    alert('load end!');
+                    return res;
+                    
+                } else
+                    alert('already exist!');
             }
         });
     })(),
