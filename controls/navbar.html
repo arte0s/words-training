@@ -1,0 +1,47 @@
+<style>
+    :host>div {
+        background-color: rgb(0, 0, 0, 0);
+        position: relative;
+    }
+
+    slot {
+        display: block;
+        padding: 10px;
+        font-size: 110%;
+    }
+
+    z-button {
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+</style>
+
+<script>
+    export default {
+        create: that => ({
+            connectedCallback: () => {
+
+                that.shadowRoot.children[1].children[1].addEventListener('click', e => {
+
+                    e.stopPropagation();
+
+                    that.shadowRoot.dispatchEvent(new CustomEvent('navbarClick', {
+                        bubbles: true,
+                        composed: true
+                    }));
+                });
+            }
+        })
+    };
+</script>
+
+<template>
+    <div>
+        <slot name="title">&nbsp;</slot>
+        <z-button data-round>
+            <slot name="icon"></slot>
+        </z-button>
+    </div>
+</template>

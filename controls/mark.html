@@ -1,0 +1,389 @@
+<style>
+    :host>div {
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+    }
+
+    .mark {
+        position: relative;
+        top: 0;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 15px 0 0 0;
+        font-size: 150%;
+        text-align: center;
+        opacity: 0;
+    }
+
+    .mark>span {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        border-radius: 50%;
+        /* background-color: var(--correct); */
+        opacity: 0.6;
+        font-size: 70%;
+        padding: 3px;
+        box-shadow: inset 0 0 5px 1px rgba(0, 0, 0, .5);
+    }
+
+    /* .mark>slot {
+        color: var(--correct);
+    }
+
+    span.decrease {
+        background: var(--important);
+    }
+
+    .decrease~slot {
+        color: var(--important);
+    } */
+
+    /*Mark animation*/
+    :host([start]) .mark {
+        animation: falldown 7.5s, appear 0.5s;
+        animation-timing-function: cubic-bezier(0.45, 0, 1.0, 1.0), linear;
+        animation-fill-mode: forwards, forwards;
+    }
+
+    :host([finish]) .mark {
+        animation: disappear 1s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+    }
+
+    :host([pause]) .mark {
+        animation-play-state: paused;
+    }
+
+    @keyframes falldown {
+        to {
+            top: calc(100% - 64px);
+            /*mark height*/
+        }
+    }
+
+    @keyframes appear {
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes disappear {
+        to {
+            opacity: 0;
+        }
+    }
+</style>
+
+<script>
+    export default {
+
+        observedAttributes: () => {
+
+            return ['start', 'pause', 'count', 'ok', 'error'];
+        },
+
+        create: that => {
+
+            let eMark, counter, from;
+
+            const style2int = (el, style) => {
+                const value = window.getComputedStyle(el)[style];
+                return parseInt(value.substring(0, value.length - 2)); //2 is unit length (e.g. "4px")
+            };
+
+            const getPercent = () => {
+
+                const MARK_HEIGHT = 64;
+                const max = style2int(eMark.parentElement, 'height') - MARK_HEIGHT;
+                return parseInt((max - style2int(eMark, 'top')) / max * 100);
+            };
+
+            //-----------------------------------------------
+            //  COUNTER
+            //-----------------------------------------------
+            const getCounter = (() => {
+
+                const getNewCount = (delta, fr, to) => {
+
+                    fr += delta;
+
+                    if ((delta > 0 && fr > to) || (delta < 0 && fr < to))
+                        fr = to;
+
+                    return fr;
+                };
+
+                return (countFrom, fnTick) => {
+
+                    const period = 20;
+                    const number = Math.floor(750 / period); //Duration 0.75s
+
+                    let timerId, pauseFlag, delta, endFn;
+                    let countTo;
+
+                    const start = (c, fn) => {
+                        countTo = c;
+                        endFn = fn;
+
+                        delta = Math.round((countTo - countFrom) / number);
+                        if (delta === 0)
+                            delta = countTo - countFrom > 0 ? 1 : -1;
+
+                        console.log('[COUNTER] from: ' + countFrom + ' to: ' + countTo +
+                            ' delta: ' + delta);
+                        startTimer();
+                    };
+
+                    const startTimer = () => {
+
+                        pauseFlag = false;
+                        timerId = setInterval(tick, period);
+                    }
+
+                    const stop = () => {
+
+                        clearInterval(timerId);
+                        timerId = null;
+                    };
+
+                    const pause = () => {
+
+                        if (!timerId)
+                            return false;
+
+                        pauseFlag = true;
+                        stop();
+                        return true;
+                    }
+
+                    const cont = () => {
+
+                        if (!pauseFlag)
+                            return false;
+
+                        startTimer();
+                        return true;
+                    };
+
+                    const tick = () => {
+
+                        countFrom = getNewCount(delta, countFrom, countTo);
+
+                        fnTick(countFrom);
+
+                        if (countFrom === countTo) {
+
+                            stop();
+                            pauseFlag = null;
+
+                            if (endFn)
+                                endFn();
+                        }
+                    };
+
+                    return {
+                        start,
+                        pause,
+                        cont,
+                        stop,
+                        isPaused: () => pauseFlag
+                    };
+                };
+            })();
+
+            //-----------------------------------------------
+            //  Animations end
+            //-----------------------------------------------
+            const falldownEndHandler = toCount => {
+
+                if (toCount === 0)
+                    setColor(true);
+                // eMark.children[0].classList.add('decrease');
+
+                that.setAttribute('count-to', toCount);
+
+                eMark.style.opacity = window.getComputedStyle(eMark)['opacity'];
+                eMark.style.top = window.getComputedStyle(eMark)['top'];
+
+                that.removeAttribute('start', '');
+
+                counter.start(toCount, () => {
+
+                    counter.stop();
+                    counter = null;
+
+                    that.shadowRoot.dispatchEvent(new CustomEvent('counterEnd', {
+                        bubbles: true,
+                        composed: true
+                    }));
+                });
+
+                that.shadowRoot.dispatchEvent(new CustomEvent('falldownEnd', {
+                    bubbles: true,
+                    composed: true
+                }));
+            };
+
+            const disappearEndHandler = () => {
+
+                that.removeAttribute('finish', '');
+                that.removeAttribute('ok', '');
+                that.removeAttribute('error', '');
+
+                that.shadowRoot.dispatchEvent(new CustomEvent('finish', {
+                    bubbles: true,
+                    composed: true
+                }));
+            };
+
+            const setColor = err => {
+
+                const name = err ? '--important' : '--correct' + '0'; //Math.floor(Math.random() * 3);
+                const color = getComputedStyle(document.documentElement).getPropertyValue(name);
+                eMark.children[0].style.background = color;
+                eMark.children[1].style.color = color;
+            };
+
+            //-----------------------------------------------
+            //  Attribute change
+            //-----------------------------------------------
+            const changeStartAttr = () => {
+
+                that.removeAttribute('count-to');
+                that.removeAttribute('pause');
+
+                from = parseInt(that.getAttribute('count'));
+                console.log('[START] Start from:', from);
+
+                counter = getCounter(from, c => that.setAttribute('count', c));
+
+                setColor(false);
+                // eMark.children[0].classList.remove('decrease');
+                eMark.style.opacity = 0;
+                eMark.style.top = 0;
+            };
+
+            const changePauseAttr = set => {
+
+                if (counter) {
+                    if (set) {
+                        if (!counter.isPaused())
+                            counter.pause();
+                    } else {
+                        if (counter.isPaused())
+                            counter.cont();
+                    }
+                }
+            };
+
+            const changeCountAttr = newValue => {
+
+                // console.log('[count-attr]', newValue);
+
+                if (eMark)
+                    eMark.children[0].innerText = newValue;
+            };
+
+            const changeOkAttr = () => falldownEndHandler(from + getPercent());
+            const changeErrorAttr = () => falldownEndHandler(0);
+
+            //-----------------------------------------------
+            //  RETURN
+            //-----------------------------------------------
+            return {
+
+                connectedCallback: () => {
+
+                    eMark = that.shadowRoot.children[1].children[0];
+                    changeCountAttr(that.getAttribute('count'));
+
+                    eMark.addEventListener("animationend", e => {
+
+                        switch (e.animationName) {
+
+                            case 'falldown':
+                                falldownEndHandler(0);
+                                break;
+
+                            case 'disappear':
+                                disappearEndHandler();
+                                break;
+                        }
+                    });
+                },
+
+                attributeChangedCallback: (name, oldValue, newValue) => {
+
+                    switch (name) {
+
+                        //Only if the attribute is set
+                        case 'start':
+                        case 'ok':
+                        case 'error':
+                            if (newValue === '')
+                                switch (name) {
+
+                                    case 'start':
+                                        changeStartAttr();
+                                        break;
+
+                                    case 'ok':
+                                        if (that.hasAttribute('start'))
+                                            changeOkAttr();
+                                        break;
+
+                                    case 'error':
+                                        if (that.hasAttribute('start'))
+                                            changeErrorAttr();
+                                        break;
+                                }
+                            break;
+
+                        case 'pause':
+                            changePauseAttr(newValue === '');
+                            break;
+
+                        case 'count':
+                            changeCountAttr(newValue);
+                            break;
+                    }
+                },
+
+                listeners: {
+                    click: event => {
+
+                        if (that.hasAttribute('start') || that.hasAttribute('finish') || counter) {
+
+                            console.log(`Pause event raised`);
+
+                            const pause = that.hasAttribute('pause');
+                            pause ? that.removeAttribute('pause') : that.setAttribute('pause', '');
+
+                            that.shadowRoot.dispatchEvent(new CustomEvent('pause', {
+                                bubbles: true,
+                                composed: true,
+                                detail: {
+                                    pause
+                                }
+                            }));
+                        }
+                    }
+                }
+            }
+        }
+    };
+</script>
+
+<template>
+    <div>
+        <div class="mark">
+            <span>xx</span>
+            <slot>{word}</slot>
+        </div>
+    </div>
+</template>

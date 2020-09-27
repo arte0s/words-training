@@ -1,7 +1,7 @@
 :root {
     --image-path: url(img/london-logo.png);
     --shadow: 128, 128, 128;
-    --shadow-light: rgba(var(--shadow), 0.1);
+    --shadow-light: rgba(var(--shadow), 0.2);
     --shadow-middle: rgba(var(--shadow), 0.5);
     --shadow-dark: rgba(var(--shadow), 0.9);
     --filter-main: contrast(130%) grayscale(100%);

@@ -1,0 +1,126 @@
+<style>
+    z-navbar {
+        background-color: var(--header);
+    }
+
+    div[slot="content"],
+    div[slot="footer"] {
+        height: 100%;
+        padding: 10px;
+        background-color: var(--body);
+        color: var(--text);
+    }
+    
+    h1 {
+        color: var(--important);
+        font-size: 120%;
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    li {
+        margin: 10px;
+    }
+
+    .list-content {
+        position: relative;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    /* Width */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: var(--shadow-middle);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--important);
+    }
+</style>
+
+<script>
+    export default {
+        texts: {
+            title1: {
+                en: 'Game rules',
+                ru: 'Правила игры'
+            },
+            line1: {
+                en: 'During the game, the studied word falls out from above',
+                ru: 'В процессе игры сверху выпадает изучаемое слово'
+            },
+            line2: {
+                en: 'To the left of the word is the number of points',
+                ru: 'Слева от слова указывается количество очков'
+            },
+            line3: {
+                en: 'Below are 4 translations of this word',
+                ru: 'Внизу даны 4 варианта перевода этого слова'
+            },
+            line4: {
+                en: 'You must choose the correct option before the word falls',
+                ru: 'Необходимо выбрать правильный вариант, прежде чем слово упадёт'
+            },
+            line5: {
+                en: 'Then earlier the answer is given, then more points you get for this word',
+                ru: 'Чем раньше дан ответ, тем больше очков за это слово вы получаете'
+            },
+            line6: {
+                en: 'After the word scores a certain number of points, it is considered learned',
+                ru: 'После того как слово наберёт определённое количество очков, оно считается выученным'
+            },
+            line7: {
+                en: 'If the number of words remaining for learning is less than the minimum, a dialog for choosing a new word appears',
+                ru: 'Если количество оставшихся на изучении слов меньше минимального, появляется диалог выбора нового слова'
+            },
+            header: {
+                en: 'About application',
+                ru: 'О программе'
+            },
+        },
+        create: that => ({
+            connectedCallback: () => {
+
+                const root = that.shadowRoot;
+                const navbar = root.children[1].children[0];
+
+                navbar.addEventListener('navbarClick', e => {
+
+                    e.stopPropagation();
+                    root.dispatchEvent(new CustomEvent('closePage', {
+                        bubbles: true,
+                        composed: true
+                    }));
+                });
+            }
+        })
+    };
+</script>
+
+<template>
+    <z-page>
+        <z-navbar slot="header" id="navbar">
+            <span slot="title">{{header}}</span>
+            <z-icon type="back" slot="icon"></z-icon>
+        </z-navbar>
+
+        <div slot="content">
+            <h1>{{title1}}</h1>
+            <ul>
+                <li>{{line1}}</li>
+                <li>{{line2}}</li>
+                <li>{{line3}}</li>
+                <li>{{line4}}</li>
+                <li>{{line5}}</li>
+                <li>{{line6}}</li>
+                <li>{{line7}}</li>
+            </ul>
+        </div>
+    </z-page>
+</template>

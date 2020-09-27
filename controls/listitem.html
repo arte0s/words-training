@@ -1,0 +1,190 @@
+<style>
+    :host>div {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        border-width: 0 0 1px 0;
+        border-style: dotted;
+        border-color: var(--button);
+        color: var(--text);
+    }
+
+    z-checkbox {
+        margin-bottom: 8px;
+        margin-left: 10px;
+    }
+
+    :host>div>div:first-child {
+        display: inline-flex;
+        background-color: var(--shadow-light);
+        justify-content: center;
+        align-items: center;
+    }
+
+    :host>div>div:first-child {
+        margin: 0 auto;
+    }
+
+    :host>div>div:last-child {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .line {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .line>div {
+        display: inline-block;
+        padding: 1px;
+    }
+
+    .line>.center {
+        font-size: 110%;
+        font-weight: bold;
+        color: var(--important);
+    }
+
+    .line>.left,
+    .line>.right {
+        font-size: 90%;
+    }
+
+    /* Width */
+    ::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: var(--shadow-middle);
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: var(--important);
+    }
+</style>
+
+<script>
+    const CHK = 'checked';
+    const SEL = 'data-selected';
+    const FIN = 'data-finished';
+
+    export default {
+        observedAttributes: () => [SEL, FIN],
+        create: that => {
+
+            const getInput = () => that.shadowRoot.children[1].children[0].children[0];
+
+            const setCheckbox = (name, val) => {
+
+                const inp = getInput();
+
+                if ((name === CHK && val === that.hasAttribute(SEL)) ||
+                    (name === SEL && val === inp.hasAttribute(CHK)))
+                    return;
+
+                // debugger;
+
+                if (name === CHK) {
+                    if (val) {
+
+                        that.removeAttribute(FIN, '');
+                        that.setAttribute(SEL, '');
+
+                    } else
+                        that.removeAttribute(SEL);
+
+                } else if (name === FIN)
+                    val ? inp.setAttribute(FIN, '') : inp.removeAttribute(FIN);
+
+                else if (name === SEL)
+                    val ? inp.setAttribute(CHK, '') : inp.removeAttribute(CHK);
+            };
+
+            return {
+                connectedCallback: () => {
+
+                    const inp = getInput();
+
+                    inp.addEventListener('cbClick', e => {
+
+                        // console.log('[LISTITEM] event', e.detail);
+
+                        e.stopPropagation();
+                        setCheckbox(CHK, e.detail);
+
+                        that.shadowRoot.dispatchEvent(new CustomEvent('liClick', {
+                            bubbles: true,
+                            composed: true,
+                            detail: e.detail
+                        }));
+                    });
+
+                    that.shadowRoot.getElementById('sound').addEventListener('click', e => {
+
+                        e.stopPropagation();
+
+                        that.shadowRoot.dispatchEvent(new CustomEvent('speak', {
+                            bubbles: true,
+                            composed: true,
+                            detail: that.querySelector('[slot=\'word\']').textContent
+                        }));
+                    });
+
+                    const sel = that.hasAttribute(SEL);
+                    const fin = that.hasAttribute(FIN);
+
+                    if (sel && fin)
+                        console.log('[LIST-ITEM] error!', SEL, FIN, that);
+                    // throw new Error('Only one attribute ("' + SEL + '" or "' + FIN + '") can be set!');
+                    else if (sel)
+                        setCheckbox(SEL, true);
+                    else if (fin)
+                        setCheckbox(FIN, true);
+                },
+                attributeChangedCallback: (name, oldValue, newValue) => {
+
+                    if (that.shadowRoot)
+                        setCheckbox(name, newValue === '');
+                }
+            }
+        }
+    };
+</script>
+
+<template>
+    <div>
+        <div>
+            <z-checkbox></z-checkbox>
+        </div>
+
+        <div>
+            <div class="line">
+
+                <div class="left">
+                    <slot name="number">{number}</slot>
+                </div>
+
+                <div class="center">
+                    <slot name="word">{word}</slot>
+                </div>
+
+                <div class="right">
+
+                    <z-button id="sound" data-round>
+                        <z-icon type="sound"></z-icon>
+                    </z-button>
+                </div>
+            </div>
+
+            <div class="line">
+                <div class="left">
+                    <slot name="translate">{translate}</slot>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

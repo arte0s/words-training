@@ -8,7 +8,7 @@
 
 <script>
     export default {
-        observedAttributes: () => ['data-type'],
+        observedAttributes: () => ['type'],
         create: that => {
 
             const render = iconName => {
@@ -16,13 +16,8 @@
                 if (!that.shadowRoot)
                     return;
 
-                const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
-
-                alert('log1: ' + window.zoox);
-                alert('log2: ' + zoox);
+                const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("type"));
                 window.zoox.framework.load(name);
-
-                alert('log3');
 
                 const tag = document.createElement(name);
 
