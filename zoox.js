@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 'use strict';
-window.zoox = {
+const zoox = {
     framework: (() => {
 
         const createTextProcessor = (html, texts) => {
@@ -145,13 +145,19 @@ window.zoox = {
                 return res;
         };
 
+        const loadFn = tag => {
+
+            if (isElemExist(tag))
+                return loadElement(tag);
+        };
+
         const createElement = ({ template, style, module }, name) => {
 
             class UnityComponent extends HTMLElement {
 
                 constructor() {
                     super();
-                    this.logic = module && module.create ? module.create(this) : {};
+                    this.logic = module && module.create ? module.create(this, loadFn) : {};
                     this.nodes = null;
                 }
 
@@ -237,15 +243,8 @@ window.zoox = {
             },
             load: tag => {
 
-                if (isElemExist(tag)) {
-
-                    alert('loading!');
-                    const res = loadElement(tag);
-                    alert('load end!');
-                    return res;
-
-                } else
-                    alert('already exist!');
+                if (isElemExist(tag))
+                    return loadElement(tag);
             }
         });
     })(),
