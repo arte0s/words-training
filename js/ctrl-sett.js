@@ -20,29 +20,29 @@ window.global.initSett = (model, cDict) => {
 
     alert('Before matchMedia');
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    // window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
 
-        //TODO: Save to local storage!
-        if (!srPage.getElementById('cbAuto').hasAttribute('checked', 'checked')) return;
+    //     //TODO: Save to local storage!
+    //     if (!srPage.getElementById('cbAuto').hasAttribute('checked', 'checked')) return;
 
-        e.stopPropagation();
-        const cl = document.body.classList;
+    //     e.stopPropagation();
+    //     const cl = document.body.classList;
 
-        if (e.matches) {
+    //     if (e.matches) {
 
-            cl.remove('colors-light');
-            cl.add('colors-dark');
+    //         cl.remove('colors-light');
+    //         cl.add('colors-dark');
 
-        } else {
+    //     } else {
 
-            cl.remove('colors-dark');
-            cl.add('colors-light');
-        }
+    //         cl.remove('colors-dark');
+    //         cl.add('colors-light');
+    //     }
 
-        console.log(`Dark mode is ${e.matches ? '🌙 on' : '☀️ off'}.`);
-    });
+    //     console.log(`Dark mode is ${e.matches ? '🌙 on' : '☀️ off'}.`);
+    // });
 
-    alert('After matchMedia');
+    // alert('After matchMedia');
 
     btnColors.addEventListener('click', e => {
 
