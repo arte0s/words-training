@@ -18,6 +18,8 @@ window.global.initSett = (model, cDict) => {
     if (state.pop.selected)
         cbPop.setAttribute('checked', 'checked');
 
+    alert('Before matchMedia');
+
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
 
         //TODO: Save to local storage!
@@ -39,6 +41,8 @@ window.global.initSett = (model, cDict) => {
 
         console.log(`Dark mode is ${e.matches ? '🌙 on' : '☀️ off'}.`);
     });
+
+    alert('After matchMedia');
 
     btnColors.addEventListener('click', e => {
 
