@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 'use strict';
-const zoox = {
+window.zoox = {
     framework: (() => {
 
         const createTextProcessor = (html, texts) => {
@@ -243,7 +243,7 @@ const zoox = {
                     const res = loadElement(tag);
                     alert('load end!');
                     return res;
-                    
+
                 } else
                     alert('already exist!');
             }
