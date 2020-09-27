@@ -14,7 +14,8 @@
 
                 if (!that.shadowRoot) return;
 
-                const name = 'z-icon-' + (iconName || that.shadowRoot.getAttribute("data-type"));
+                const name = iconName ? 'z-icon-' + iconName :
+                    'z-icon-' + 'back'; //that.shadowRoot.host.getAttribute("data-type");
                 // zoox.framework.load(name);
 
                 const root = that.shadowRoot.children[1];
@@ -23,7 +24,7 @@
                 if (iconName && root.children && root.children[0])
                     root.children[0].remove();
 
-                const tag = document.createElement('z-icon-back');
+                const tag = document.createElement(name);
                 root.appendChild(tag);
             };
 
