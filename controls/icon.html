@@ -9,7 +9,7 @@
 <script>
     export default {
         observedAttributes: () => ['data-type'],
-        create: (that, loadFn) => {
+        create: that => {
 
             const render = iconName => {
 
@@ -18,12 +18,11 @@
 
                 const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
 
-                alert('log1: ' + loadFn);
+                alert('log1: ' + window.zoox);
+                alert('log2: ' + zoox);
+                window.zoox.framework.load(name);
 
-                loadFn(name);
-                // zoox.framework.load(name);
-
-                alert('go!');
+                alert('log3');
 
                 const tag = document.createElement(name);
 
