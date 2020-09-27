@@ -14,12 +14,15 @@
 
                 if (!that.shadowRoot) return;
 
+                // alert('that.shadowRoot.host: ' + that.shadowRoot.host);
+                // alert('that.shadowRoot.host.getAttribute: ' + that.shadowRoot.host.getAttribute);
+                // alert('getAttribute(): ' + that.shadowRoot.host.getAttribute("data-type"));
+
                 const name = iconName ? 'z-icon-' + iconName :
-                    'z-icon-' + 'back'; //that.shadowRoot.host.getAttribute("data-type");
+                    'z-icon-' + that.shadowRoot.host.getAttribute("data-type");
                 // zoox.framework.load(name);
 
-                alert('that.shadowRoot.host: ' + that.shadowRoot.host);
-                alert('that.shadowRoot.host.getAttribute: ' + that.shadowRoot.host.getAttribute);
+                alert('name: ' + name);
 
                 const root = that.shadowRoot.children[1];
                 console.log(root);
