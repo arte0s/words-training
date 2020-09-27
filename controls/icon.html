@@ -7,41 +7,40 @@
 
 <script>
     export default {
-        // observedAttributes: () => ['data-type'],
+        observedAttributes: () => ['data-type'],
         create: that => {
 
             const render = iconName => {
 
-                if (!that.shadowRoot)
-                    return;
+                if (!that.shadowRoot) return;
 
-                // const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
-                // zoox.framework.load(name);
+                const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
+                zoox.framework.load(name);
 
-                const tag = document.createElement('z-icon-back');
-                const slot = that.shadowRoot.children[1];
-                console.log(slot);
+                const root = that.shadowRoot.children[1];
+                console.log(root);
 
-                // if (iconName)
-                //     slot.children[0].remove();
+                if (iconName && root.children && root.children[0])
+                    root.children[0].remove();
 
-                slot.appendChild(tag);
+                const tag = document.createElement(name);
+                root.appendChild(tag);
             };
 
             return {
                 connectedCallback: () => render(),
-                // attributeChangedCallback: (name, oldValue, newValue) => {
+                attributeChangedCallback: (name, oldValue, newValue) => {
 
-                //     if (name === 'data-type')
-                //         render(newValue);
-                // }
+                    if (name === 'data-type')
+                        render(newValue);
+                }
             };
         }
     };
 </script>
 
 <template>
+    <!-- <slot></slot> -->
     <div>
-        <slot></slot>
     </div>
 </template>
