@@ -7,7 +7,7 @@
 
 <script>
     export default {
-        observedAttributes: () => ['data-type'],
+        // observedAttributes: () => ['data-type'],
         create: that => {
 
             const render = iconName => {
@@ -29,11 +29,11 @@
 
             return {
                 connectedCallback: () => render(),
-                attributeChangedCallback: (name, oldValue, newValue) => {
+                // attributeChangedCallback: (name, oldValue, newValue) => {
 
-                    // if (name === 'data-type')
-                    //     render(newValue);
-                }
+                //     // if (name === 'data-type')
+                //     //     render(newValue);
+                // }
             };
         }
     };
