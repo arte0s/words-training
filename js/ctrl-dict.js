@@ -1,5 +1,5 @@
 'use strict';
-global.initDict = model => {
+window.global.initDict = model => {
 
     let content = [], dict;
 
@@ -11,7 +11,7 @@ global.initDict = model => {
     const createTitle = () => {
 
         const num = model.dicts.getFinished(dict) + model.dicts.getSelected(dict);
-        const text = 'Выбрано ' + num + global.utils.getWordText(num);
+        const text = 'Выбрано ' + num + window.global.utils.getWordText(num);
         window.zoox.utils.setSlotText(elNavbar, 'title', 'span', text);
     };
 

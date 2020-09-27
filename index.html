@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/app.css">
 
     <script>
-        const global = {};
+        window.global = {};
     </script>
 
     <script src="./js/model-utils.js"></script>
@@ -34,17 +34,17 @@
 
     <script>
         'use strict';
-        Object.freeze(global);
+        Object.freeze(window.global);
 
         try {
 
             zoox.framework.init('./controls/', async () => {
 
-                const model = await global.initModel();
+                const model = await window.global.initModel();
 
-                const cDict = global.initDict(model);
-                global.initSett(model, cDict);
-                global.initMain(model);
+                const cDict = window.global.initDict(model);
+                window.global.initSett(model, cDict);
+                window.global.initMain(model);
             });
 
         } catch (e) {
@@ -54,9 +54,10 @@
     </script>
 </head>
 
-<body class="colors-light">
-    <img class="preloader" src="img/preloader.svg" id="loader" style="display: none;">
-    <z-app id="app"></z-app>
+<!-- <body class="colors-light"> -->
+<body>
+    <img class="preloader" src="img/preloader.svg" id="loader">
+    <z-app id="app" style="display: none;"></z-app>
 </body>
 
 </html>

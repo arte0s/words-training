@@ -1,7 +1,7 @@
 'use strict';
 
 //Utils
-global.utils = Object.freeze({
+window.global.utils = Object.freeze({
     safeWhile: (fn, count) => {
 
         let i = count;
@@ -17,7 +17,7 @@ global.utils = Object.freeze({
 });
 
 //Local storage
-global.locStorage = Object.freeze({
+window.global.locStorage = Object.freeze({
     save: (n, o) => window.localStorage.setItem(n, JSON.stringify(o)),
     load: n => JSON.parse(window.localStorage.getItem(n))
 });

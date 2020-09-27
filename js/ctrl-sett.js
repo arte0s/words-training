@@ -1,5 +1,5 @@
 'use strict';
-global.initSett = (model, cDict) => {
+window.global.initSett = (model, cDict) => {
 
     const elApp = document.body.children[1].shadowRoot;
     const settPage = elApp.getElementById('sett');

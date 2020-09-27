@@ -1,11 +1,11 @@
 'use strict';
-global.initMain = (() => {
+window.global.initMain = (() => {
 
     const setTitle = (model, navbar) => {
 
         //TODO: Сделать перевод zoox.getText(id)...
         const fin = model.dicts.getFinished();
-        const nbTitle = 'Изучено ' + fin + ' ' + global.utils.getWordText(fin);
+        const nbTitle = 'Изучено ' + fin + ' ' + window.global.utils.getWordText(fin);
 
         // navbar.innerHTML = '';
         window.zoox.utils.setSlotText(navbar, 'title', 'span', nbTitle);

@@ -1,5 +1,5 @@
 'use strict';
-global.getDictionaries = (dictData, dState) => {
+window.global.getDictionaries = (dictData, dState) => {
 
     let wordsPack,
         currentWord,
@@ -16,7 +16,7 @@ global.getDictionaries = (dictData, dState) => {
 
         //Get a random selected dictionary
         let dict;
-        global.utils.safeWhile(() => {
+        window.global.utils.safeWhile(() => {
 
             dict = getRandomPropName(dictData);
             return dState.get(dict) === false;
@@ -47,7 +47,7 @@ global.getDictionaries = (dictData, dState) => {
 
         wordsPack = [];
 
-        global.utils.safeWhile(() => {
+        window.global.utils.safeWhile(() => {
 
             const data = getRandomTransl();
 
@@ -72,7 +72,7 @@ global.getDictionaries = (dictData, dState) => {
     ///////////////////////////////////////////////////////////////
     const addCount = count => {
 
-        if (global.utils.isFinished(count)) {
+        if (window.global.utils.isFinished(count)) {
 
             wordsSelected.remove(currentWord.dict, currentWord.word.w);
             wordsFinished.add(currentWord.dict, currentWord.word.w);
@@ -84,7 +84,7 @@ global.getDictionaries = (dictData, dState) => {
 
     const getNewWord = () => {
 
-        global.utils.safeWhile(() => {
+        window.global.utils.safeWhile(() => {
 
             let key = getRandomWord();
 
@@ -125,15 +125,15 @@ global.getDictionaries = (dictData, dState) => {
         const wrd = Object.assign({}, w);
         wrd.dict = dict;
         wrd.checked = wordsSelected.isExist(dict, w.w);
-        wrd.finished = global.utils.isFinished(w.count);
+        wrd.finished = window.global.utils.isFinished(w.count);
         return Object.freeze(wrd);
     };
 
     const get = dName => dictData[dName].get().map(w => createExtWord(w, dName));
 
     //Initialization
-    const wordsSelected = global.getWordsSelected(getRandomWord);
-    const wordsFinished = global.getWordsFinished();
+    const wordsSelected = window.global.getWordsSelected(getRandomWord);
+    const wordsFinished = window.global.getWordsFinished();
 
     return Object.freeze({
         get,

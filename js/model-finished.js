@@ -1,8 +1,8 @@
 'use strict';
-global.getWordsFinished = () => {
+window.global.getWordsFinished = () => {
 
     const LS_WORDS = 'wt-finish';
-    const save = (d = data) => global.locStorage.save(LS_WORDS, d);
+    const save = (d = data) => window.global.locStorage.save(LS_WORDS, d);
     const get = (d, w) => data.find(k => k.dict === d && k.word === w);
 
     //Public methods
@@ -26,7 +26,7 @@ global.getWordsFinished = () => {
     };
 
     //Initialization
-    const data = global.locStorage.load(LS_WORDS) || [];
+    const data = window.global.locStorage.load(LS_WORDS) || [];
 
     return Object.freeze({
         get: () => data.slice(0),

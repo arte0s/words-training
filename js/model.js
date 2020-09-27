@@ -15,9 +15,9 @@
 //2. Написать плагин для автоматической сборки моибльной версии (gulp-плагин?)
 
 'use strict';
-global.initModel = async () => Promise.all([
-    global.loadDictAsync('verbs'),
-    global.loadDictAsync('pop')
+window.global.initModel = async () => Promise.all([
+    window.global.loadDictAsync('verbs'),
+    window.global.loadDictAsync('pop')
 ]).then(values => {
 
     const names = [];
@@ -31,11 +31,11 @@ global.initModel = async () => Promise.all([
     Object.freeze(data);
     console.log('[data]', data, '[names]', names);
 
-    const state = global.getDictsState(names);
+    const state = window.global.getDictsState(names);
 
     return {
-        settings: global.getSettings(),
+        settings: window.global.getSettings(),
         dictsState: state,
-        dicts: global.getDictionaries(data, state)
+        dicts: window.global.getDictionaries(data, state)
     };
 });

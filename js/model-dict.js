@@ -1,10 +1,10 @@
 'use strict';
-global.loadDictAsync = async name => {
+window.global.loadDictAsync = async name => {
 
     const loadOldData = () => {
 
         const LS_OLD = 'dict_' + name;
-        const oldData = global.locStorage.load(LS_OLD);
+        const oldData = window.global.locStorage.load(LS_OLD);
 
         if (!oldData) return;
 

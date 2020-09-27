@@ -1,11 +1,11 @@
 'use strict';
-global.getSettings = () => {
+window.global.getSettings = () => {
 
     const LS_NAME = 'wt-settings';
 
     const data = (() => {
 
-        let s = global.locStorage.load(LS_NAME);
+        let s = window.global.locStorage.load(LS_NAME);
 
         return s || Object.seal({
             sound: true,
@@ -14,7 +14,7 @@ global.getSettings = () => {
         });
     })();
 
-    const save = () => global.locStorage.save(LS_NAME, data);
+    const save = () => window.global.locStorage.save(LS_NAME, data);
 
     return Object.freeze({
         get: () => Object.assign({}, data),

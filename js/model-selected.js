@@ -1,22 +1,22 @@
 'use strict';
-global.getWordsSelected = initFn => {
+window.global.getWordsSelected = initFn => {
 
     const LS_WORDS = 'wt-words';
     const WORDS_MIN = 5;
     const WORDS_LIMIT = 10;
 
     //Private methods
-    const save = (d = data) => global.locStorage.save(LS_WORDS, d);
+    const save = (d = data) => window.global.locStorage.save(LS_WORDS, d);
     const get = (d, w) => data.find(k => k.dict === d && k.word === w);
     const create = (d, w) => data.push({ dict: d, word: w, count: 0 });
 
     const initData = () => {
 
-        Array.prototype.push.apply(data, global.locStorage.load(LS_WORDS));
+        Array.prototype.push.apply(data, window.global.locStorage.load(LS_WORDS));
 
         if (data.length >= WORDS_LIMIT) return;
 
-        global.utils.safeWhile(() => {
+        window.global.utils.safeWhile(() => {
 
             const key = initFn();
 
