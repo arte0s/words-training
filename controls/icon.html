@@ -10,12 +10,13 @@
         // observedAttributes: () => ['data-type'],
         create: that => {
 
-            const render = iconName => {
+            const render = () => {
+                // iconName => {
 
                 if (!that.shadowRoot) return;
 
-                const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
-                zoox.framework.load(name);
+                // const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
+                // zoox.framework.load(name);
 
                 const root = that.shadowRoot.children[1];
                 console.log(root);
