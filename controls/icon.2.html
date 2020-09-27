@@ -1,0 +1,53 @@
+<style>
+    :host>*:nth-child(2) {
+        /* display: inline-block; */
+        /* padding: 0 4px 0 0; */
+    }
+</style>
+
+<script>
+    export default {
+        observedAttributes: () => ['data-type'],
+        create: that => {
+
+            const render = iconName => {
+
+                if (!that.shadowRoot) return;
+
+                // alert('that.shadowRoot.host: ' + that.shadowRoot.host);
+                // alert('that.shadowRoot.host.getAttribute: ' + that.shadowRoot.host.getAttribute);
+                // alert('getAttribute(): ' + that.shadowRoot.host.getAttribute("data-type"));
+
+                const name = iconName ? 'z-icon-' + iconName :
+                    'z-icon-' + that.shadowRoot.host.getAttribute("data-type");
+                // zoox.framework.load(name);
+
+                alert('name: ' + name);
+
+                const root = that.shadowRoot.children[1];
+                console.log(root);
+
+                if (iconName && root.children && root.children[0])
+                    root.children[0].remove();
+
+                const tag = document.createElement(name);
+                root.appendChild(tag);
+            };
+
+            return {
+                connectedCallback: () => render(),
+                attributeChangedCallback: (name, oldValue, newValue) => {
+
+                    if (name === 'data-type')
+                        render(newValue);
+                }
+            };
+        }
+    };
+</script>
+
+<template>
+    <!-- <slot></slot> -->
+    <div>
+    </div>
+</template>
