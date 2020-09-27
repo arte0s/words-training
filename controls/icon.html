@@ -16,11 +16,13 @@
                 if (!that.shadowRoot)
                     return;
 
-                alert('iconName: ' + iconName + ' data-type: ' + that.shadowRoot.host.getAttribute("data-type"));
+                // alert('iconName: ' + iconName + ' data-type: ' + that.shadowRoot.host.getAttribute("data-type"));
 
                 const name = 'z-icon-' + (iconName || that.shadowRoot.host.getAttribute("data-type"));
-                zoox.framework.load(name);
 
+                alert('name: ' + name);
+                zoox.framework.load(name);
+                alert('load!');
 
                 const tag = document.createElement(name);
 
