@@ -4,10 +4,10 @@
     "start_url": "./index.html",
     "display": "fullscreen",
     "theme_color": "#05577d",
-    "background_color": "#fff",
+    "background_color": "#05577d",
     "description": "A game for learning english words.",
     "icons": [{
-      "src": "img/icon48.png",
+      "src": "./img/icon48.png",
       "sizes": "48x48",
       "type": "image/png"
     }]
