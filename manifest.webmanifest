@@ -2,7 +2,7 @@
     "name": "WordsTraning",
     "short_name": "WordsTraning",
     "start_url": "./index.html",
-    "display": "fullscreen",
+    "display": "standalone",
     "theme_color": "#05577d",
     "background_color": "#05577d",
     "description": "A game for learning english words.",
