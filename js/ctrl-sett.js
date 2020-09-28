@@ -18,7 +18,7 @@ window.global.initSett = (model, cDict) => {
     if (state.pop.selected)
         cbPop.setAttribute('checked', 'checked');
 
-    alert('Before matchMedia');
+    // alert('Before matchMedia');
 
     // window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
 
