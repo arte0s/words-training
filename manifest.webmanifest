@@ -6,7 +6,7 @@
     "theme_color": "#05577d",
     "background_color": "#05577d",
     "description": "A game for learning english words.",
-	"orientation": "portrait",
+	"orientation": "portrait-primary",
     "icons": [{
         "src": "./img/icon196.png",
         "sizes": "196x196",
