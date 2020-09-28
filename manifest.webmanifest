@@ -1,17 +1,17 @@
 {
     "name": "WordsTraning",
     "short_name": "WordsTraning",
-    "start_url": "/index.html",
+    "start_url": "./index.html",
     "display": "fullscreen",
     "theme_color": "#05577d",
     "background_color": "#05577d",
     "description": "A game for learning english words.",
     "icons": [{
-        "src": "/img/icon192.png",
+        "src": "./img/icon192.png",
         "sizes": "192x192",
         "type": "image/png"
     },{
-        "src": "/img/icon512.png",
+        "src": "./img/icon512.png",
         "sizes": "512x512",
         "type": "image/png"
     }]
