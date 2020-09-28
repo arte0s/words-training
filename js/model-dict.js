@@ -26,7 +26,6 @@ window.global.loadDictAsync = async name => {
                     a.push(c);
                     return a;
                 })(), [])
-            // count: 0,
         }));
 
         return acc;

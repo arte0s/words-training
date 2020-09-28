@@ -3,7 +3,7 @@ window.global.initMain = (() => {
 
     const setTitle = (model, navbar) => {
 
-        //TODO: Сделать перевод zoox.getText(id)...
+        //TODO: Сделать перевод window.zoox.getText(id)...
         const fin = model.dicts.getFinished();
         const nbTitle = 'Изучено ' + fin + ' ' + window.global.utils.getWordText(fin);
 

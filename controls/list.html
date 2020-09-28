@@ -23,21 +23,6 @@
         height: 100%;
         overflow-y: auto;
     }
-
-    /* Width */
-    /* ::-webkit-scrollbar {
-        width: 6px;
-    } */
-
-    /* Track */
-    /* ::-webkit-scrollbar-track {
-        background: var(--shadow-middle);
-    } */
-
-    /* Handle */
-    /* ::-webkit-scrollbar-thumb {
-        background: var(--important);
-    } */
 </style>
 
 <script>
@@ -199,7 +184,7 @@
 
                             init();
                             that.removeAttribute(INIT);
-                            
+
                         } else if (name === SCROLL && newValue !== null) {
 
                             scrollPos.load(getRoot(), newValue);

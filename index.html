@@ -1,7 +1,23 @@
 <!DOCTYPE html>
 <html lang="ru">
 
-<!-- TODO: !!! ИСПРАВИТЬ ОШИБКИ ПРИ ЗАПОЛНЕНИИ ЛИСТА !!! -->
+<!-- TODO: 
+    - Лист: Исправить ошибку заполнения листа 
+    - Лист, PWA: Понять почему не видна прокрутка в PWA-версии
+    - Иконки: Сделать векторную иконку в новых цветах
+    - Иконки, PWA: Сделать PNG-иконки для PWA (iOS и Android)
+    - i18n: Переводить динамические тексты
+    - PWA: Сделать общую версию для приложения, PWA и сайта
+    - Ночной режим, PWA: Понять почему не работает автоматичский ночной режим для PWA
+    - Ночной режим: Заменить кнопку Ночной/дневной режим на чек-бокс
+    - Ночной режим: Сделать активность чек-бокса Ночной/дневной режим в заивисмоти 
+        от чек-бокса Авт-й ночной режим
+    - Восстановить: Добавить возможность выбора словарей
+    - Восстановить: Закрытие перевода при клике по нему 
+    - Восстановить: Добавить закачку исторических данных
+    - Дизайн: Для светлой темы (или для обоих тем) сделать цвет шарика и слова немного темнее?
+    - Дизайн: Заменить кнопки на строки меню
+-->
 
 <head>
     <meta charset="utf-8">
@@ -38,34 +54,20 @@
     <script>
         'use strict';
         Object.freeze(window.global);
+        window.zoox.framework.init('./controls/', async () => {
 
-        try {
+            const model = await window.global.initModel();
 
-            zoox.framework.init('./controls/', async () => {
-
-                const model = await window.global.initModel();
-
-                const cDict = window.global.initDict(model);
-                // alert('Dicts is loaded');
-
-                window.global.initSett(model, cDict);
-                // alert('Settings is loaded');
-
-                window.global.initMain(model);
-                // alert('All is loaded!');
-            });
-
-        } catch (e) {
-
-            alert('Error:' + e);
-        }
+            const cDict = window.global.initDict(model);
+            window.global.initSett(model, cDict);
+            window.global.initMain(model);
+        });
     </script>
 </head>
 
-<!-- v15.16 -->
 <body>
     <img class="preloader" src="img/preloader.svg" id="loader">
-    <z-app id="app" style="display: none;"></z-app>
+    <z-app style="display: none;" id="app"></z-app>
 </body>
 
 </html>
