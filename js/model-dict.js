@@ -33,7 +33,7 @@ window.global.loadDictAsync = async name => {
 
     const loadData = async () => {
 
-        const response = await fetch('/data/' + name + '.json');
+        const response = await fetch('./data/' + name + '.json');
 
         if (!response.ok)
             throw new Error("Ошибка HTTP: " + response.status);
