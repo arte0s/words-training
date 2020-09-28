@@ -11,7 +11,7 @@ body {
     overflow: hidden;
     margin: 0 auto;
     padding: 0;
-    background-color: #aaaaaa;
+    background-color: var(--header);
     color: var(--title);
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
