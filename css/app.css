@@ -3,7 +3,6 @@ body {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    /* position: relative; */
     height: 100%;
     width: 100%;
     /* 70% of screen height */
